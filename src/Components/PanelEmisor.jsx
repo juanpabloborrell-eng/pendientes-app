@@ -58,12 +58,13 @@ export default function PanelEmisor({ user }) {
     const { data } = await supabase
       .from('pendientes_destinatarios')
       .select(`
-        destinatario_id,
-        estado,
-        mensaje:pendientes_mensajes (
-          eliminado
-        )
-      `)
+  destinatario_id,
+  estado,
+  leido,
+  mensaje:pendientes_mensajes (
+    eliminado
+  )
+`)
 
     const visibles = (data || []).filter((x) => x.mensaje && !x.mensaje.eliminado)
 
@@ -72,13 +73,17 @@ export default function PanelEmisor({ user }) {
     visibles.forEach((item) => {
       if (!resumen[item.destinatario_id]) {
         resumen[item.destinatario_id] = {
-          pendiente: 0,
-          cumplido: 0,
-          observado: 0,
-        }
+  pendiente: 0,
+  cumplido: 0,
+  observado: 0,
+  noLeidos: 0,
+}
       }
 
       resumen[item.destinatario_id][item.estado] += 1
+      if (!item.leido) {
+  resumen[item.destinatario_id].noLeidos += 1
+}
     })
 
     setContadores(resumen)
@@ -130,9 +135,32 @@ export default function PanelEmisor({ user }) {
   }
 
   useEffect(() => {
-    cargarDestinatarios()
-    cargarContadores()
-  }, [])
+  cargarDestinatarios()
+  cargarContadores()
+
+  const channel = supabase
+    .channel('pendientes-emisor')
+    .on(
+      'postgres_changes',
+      {
+        event: '*',
+        schema: 'public',
+        table: 'pendientes_destinatarios',
+      },
+      () => {
+        cargarContadores()
+
+        if (destinatarioActivo) {
+          cargarPendientesDe(destinatarioActivo)
+        }
+      }
+    )
+    .subscribe()
+
+  return () => {
+    supabase.removeChannel(channel)
+  }
+}, [destinatarioActivo])
 
   const destinatariosFiltrados = useMemo(() => {
     return destinatarios.filter((d) =>
@@ -173,14 +201,20 @@ export default function PanelEmisor({ user }) {
           <div className="recipient-grid">
             {destinatariosFiltrados.map((d) => {
               const c = contadores[d.id] || {
-                pendiente: 0,
-                cumplido: 0,
-                observado: 0,
-              }
+  pendiente: 0,
+  cumplido: 0,
+  observado: 0,
+  noLeidos: 0,
+}
 
               return (
                 <button key={d.id} onClick={() => cargarPendientesDe(d)}>
                   <strong>{d.nombre}</strong>
+                  {c.noLeidos > 0 && (
+  <div className="unread-badge">
+    {c.noLeidos} sin leer
+  </div>
+)}
 
                   <div className="recipient-counts">
   <div className="mini-card pendiente">

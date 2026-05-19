@@ -29,6 +29,7 @@ export default function Login({ onLogin }) {
   return (
     <div className="login-page">
       <div className="login-box">
+        <img src={`${import.meta.env.BASE_URL}logo.png`} alt="Logo" className="login-logo" />
         <h1>Pendientes</h1>
         <p>Ingresá con usuario y contraseña</p>
 

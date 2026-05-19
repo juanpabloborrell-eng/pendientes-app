@@ -80,10 +80,27 @@ function labelEstado(estado) {
 
 function formatFecha(value) {
   const d = new Date(value)
-  return d.toLocaleString('es-AR', {
-    day: '2-digit',
-    month: '2-digit',
+  const hoy = new Date()
+
+  const inicioHoy = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate())
+  const inicioAyer = new Date(inicioHoy)
+  inicioAyer.setDate(inicioHoy.getDate() - 1)
+
+  const hora = d.toLocaleTimeString('es-AR', {
     hour: '2-digit',
     minute: '2-digit',
   })
+
+  if (d >= inicioHoy) {
+    return `Hoy ${hora}`
+  }
+
+  if (d >= inicioAyer) {
+    return `Ayer ${hora}`
+  }
+
+  return d.toLocaleDateString('es-AR', {
+    day: '2-digit',
+    month: '2-digit',
+  }) + ` ${hora}`
 }
