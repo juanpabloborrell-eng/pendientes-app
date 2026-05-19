@@ -12,15 +12,47 @@ export default function PanelEmisor({ user }) {
   const [contadores, setContadores] = useState({})
 
   async function cargarDestinatarios() {
-    const { data } = await supabase
-      .from('pendientes_usuarios')
-      .select('*')
-      .in('rol', ['destinatario', 'ambos'])
-      .eq('activo', true)
-      .order('nombre')
+  const orden = [
+    'Salto',
+    'Pergamino',
+    'Campana',
+    'Campana E.',
+    'Camp. M.',
+    'Zarate',
+    'Zarate E.',
+    'Talar',
+    'Pacheco',
+    'Escobar',
+    'Escobar II',
+    'Benavidez',
+    'Pilar',
+    'Camion blanco',
+    'Calidad',
+    'Cristian',
+    'Diego',
+    'Estefania',
+    'Edison',
+  ]
 
-    setDestinatarios(data || [])
-  }
+  const { data } = await supabase
+    .from('pendientes_usuarios')
+    .select('*')
+    .in('rol', ['destinatario', 'ambos'])
+    .eq('activo', true)
+
+  const ordenados = (data || []).sort((a, b) => {
+    const ia = orden.indexOf(a.nombre)
+    const ib = orden.indexOf(b.nombre)
+
+    if (ia === -1 && ib === -1) return a.nombre.localeCompare(b.nombre)
+    if (ia === -1) return 1
+    if (ib === -1) return -1
+
+    return ia - ib
+  })
+
+  setDestinatarios(ordenados)
+}
 
   async function cargarContadores() {
     const { data } = await supabase
@@ -151,9 +183,17 @@ export default function PanelEmisor({ user }) {
                   <strong>{d.nombre}</strong>
 
                   <div className="recipient-counts">
-  <span className="mini-badge pendiente">P {c.pendiente}</span>
-  <span className="mini-badge cumplido">C {c.cumplido}</span>
-  <span className="mini-badge observado">O {c.observado}</span>
+  <div className="mini-card pendiente">
+    <div className="mini-number">P {c.pendiente}</div>
+  </div>
+
+  <div className="mini-card cumplido">
+    <div className="mini-number">C {c.cumplido}</div>
+  </div>
+
+  <div className="mini-card observado">
+    <div className="mini-number">O {c.observado}</div>
+  </div>
 </div>
                 </button>
               )

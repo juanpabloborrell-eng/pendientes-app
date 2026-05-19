@@ -397,15 +397,15 @@ textarea {
 
 .recipient-counts {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   justify-content: center;
 }
 
 .mini-card {
   flex: 1;
-  border-radius: 18px;
-  padding: 16px 8px;
-  min-height: 70px;
+  border-radius: 14px;
+  padding: 10px 6px;
+  min-height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -424,8 +424,8 @@ textarea {
 }
 
 .mini-number {
-  font-size: 28px;
-  font-weight: 800;
+  font-size: 20px;
+  font-weight: 700;
   line-height: 1;
 }
 
