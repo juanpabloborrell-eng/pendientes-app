@@ -523,3 +523,33 @@ textarea {
   font-size: 11px !important;
   white-space: nowrap !important;
 }
+.receptor-sheet .mobile-task-row {
+  align-items: stretch !important;
+  min-height: 110px !important;
+}
+
+.receptor-sheet .mobile-task-main {
+  grid-area: main !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  min-height: 100% !important;
+}
+
+.receptor-sheet .mobile-task-message {
+  width: 100% !important;
+  text-align: left !important;
+  align-self: flex-start !important;
+}
+
+.receptor-sheet .mobile-task-info {
+  grid-area: info !important;
+  width: 100% !important;
+  text-align: center !important;
+  align-self: end !important;
+  justify-self: center !important;
+  margin-top: auto !important;
+  padding-top: 10px !important;
+  white-space: nowrap !important;
+}
