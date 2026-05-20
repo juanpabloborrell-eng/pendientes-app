@@ -12,7 +12,7 @@ export default function ListaMensajes({
   if (!modoEmisor) {
     return (
       <div className="receptor-sheet">
-        <div className="receptor-title">Mis mensajes NUEVO</div>
+        <div className="receptor-title">Mis mensajes </div>
 
         {mensajes.map((item, index) => (
           <div
