@@ -401,10 +401,10 @@ textarea {
 .receptor-sheet .mobile-task-main {
   grid-area: main !important;
   min-width: 0 !important;
-  text-align: left !important;
   display: flex !important;
   flex-direction: column !important;
-  justify-content: center !important;
+  justify-content: space-between !important;
+  min-height: 78px !important;
 }
 
 .receptor-sheet .mobile-task-message {
@@ -422,12 +422,14 @@ textarea {
 }
 
 .receptor-sheet .mobile-task-info {
-  margin-top: 6px !important;
+  margin-top: auto !important;
+  padding-top: 10px !important;
   font-size: 11px !important;
   line-height: 1.2 !important;
   color: #4b445f !important;
   white-space: nowrap !important;
-  text-align: left !important;
+  text-align: center !important;
+  width: 100% !important;
 }
 
 .receptor-sheet .mobile-task-info strong {
