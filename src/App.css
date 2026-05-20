@@ -493,3 +493,33 @@ textarea {
   margin-top: 8px !important;
   display: block !important;
 }
+.receptor-sheet .mobile-task-row {
+  grid-template-columns: 42px minmax(0, 1fr) 64px !important;
+  grid-template-areas:
+    "num main actions"
+    "num info actions" !important;
+  align-items: stretch !important;
+  min-height: 96px !important;
+}
+
+.receptor-sheet .mobile-task-main {
+  grid-area: main !important;
+  display: flex !important;
+  align-items: center !important;
+  text-align: left !important;
+}
+
+.receptor-sheet .mobile-task-message {
+  text-align: left !important;
+}
+
+.receptor-sheet .mobile-task-info {
+  grid-area: info !important;
+  align-self: end !important;
+  justify-self: center !important;
+  text-align: center !important;
+  width: 100% !important;
+  margin-top: 8px !important;
+  font-size: 11px !important;
+  white-space: nowrap !important;
+}
