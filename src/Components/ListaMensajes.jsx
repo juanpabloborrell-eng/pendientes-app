@@ -9,43 +9,38 @@ export default function ListaMensajes({
     return <div className="empty">No hay pendientes.</div>
   }
 
-  // VISTA RECEPTOR
   if (!modoEmisor) {
     return (
-      <div className="messages-sheet">
-        <div className="sheet-title">Mis mensajes</div>
+      <div className="receptor-sheet">
+        <div className="receptor-title">Mis mensajes NUEVO</div>
 
         {mensajes.map((item, index) => (
           <div
             key={item.id}
-            className={`sheet-row ${item.estado === 'pendiente' ? 'is-pending' : ''}`}
+            className={`mobile-task-row ${item.estado === 'pendiente' ? 'pending' : ''}`}
           >
-            <div className="sheet-number">{index + 1}</div>
+            <div className="mobile-task-number">{index + 1}</div>
 
-            <div className="sheet-message">
-              {item.mensaje.texto}
-            </div>
-
-            <div className="sheet-info">
-              <div>
-                <strong>Emisor:</strong> {item.mensaje.emisor?.nombre}
+            <div className="mobile-task-main">
+              <div className="mobile-task-message">{item.mensaje.texto}</div>
+              <div className="mobile-task-info">
+                <strong>Emisor:</strong> {item.mensaje.emisor?.nombre} · {formatFecha(item.mensaje.created_at)}
               </div>
-              <div>{formatFecha(item.mensaje.created_at)}</div>
             </div>
 
-            <div className="sheet-actions">
+            <div className="mobile-task-actions">
               <button
-                className={item.estado === 'cumplido' ? 'sheet-btn completed active' : 'sheet-btn completed'}
+                className="mobile-icon-btn done"
                 onClick={() => onCambiarEstado(item.id, item.estado === 'cumplido' ? 'pendiente' : 'cumplido')}
               >
-                ✓ Cumplido
+                ✓
               </button>
 
               <button
-                className={item.estado === 'observado' ? 'sheet-btn observed active' : 'sheet-btn observed'}
+                className="mobile-icon-btn obs"
                 onClick={() => onCambiarEstado(item.id, item.estado === 'observado' ? 'pendiente' : 'observado')}
               >
-                👁 Observado
+                👁
               </button>
             </div>
           </div>
@@ -54,7 +49,6 @@ export default function ListaMensajes({
     )
   }
 
-  // VISTA EMISOR
   return (
     <div className="messages-area">
       {mensajes.map((item) => {
@@ -68,25 +62,15 @@ export default function ListaMensajes({
               {formatFecha(item.mensaje.created_at)} · {item.mensaje.emisor?.nombre}
             </div>
 
-            <div className="message-text">
-              {item.mensaje.texto}
-            </div>
+            <div className="message-text">{item.mensaje.texto}</div>
 
             <div className="status-row">
-              <span className="badge-read">
-                {item.leido ? 'Leído ✓' : 'No leído'}
-              </span>
-
-              <span className={`badge-status ${item.estado}`}>
-                {labelEstado(item.estado)}
-              </span>
+              <span className="badge-read">{item.leido ? 'Leído ✓' : 'No leído'}</span>
+              <span className={`badge-status ${item.estado}`}>{labelEstado(item.estado)}</span>
             </div>
 
             {puedeEliminar && (
-              <button
-                className="delete-button"
-                onClick={() => onEliminarMensaje(item)}
-              >
+              <button className="delete-button" onClick={() => onEliminarMensaje(item)}>
                 Eliminar mensaje
               </button>
             )}
@@ -106,7 +90,6 @@ function labelEstado(estado) {
 function formatFecha(value) {
   const d = new Date(value)
   const hoy = new Date()
-
   const inicioHoy = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate())
   const inicioAyer = new Date(inicioHoy)
   inicioAyer.setDate(inicioHoy.getDate() - 1)
