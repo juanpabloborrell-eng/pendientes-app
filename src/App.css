@@ -1429,3 +1429,137 @@ textarea {
     line-height: 1;
   }
 }
+.receptor-row {
+  display: grid !important;
+  grid-template-columns: 42px 1fr 72px !important;
+  grid-template-areas:
+    "num mensaje acciones"
+    "num info acciones" !important;
+  gap: 6px 8px !important;
+  align-items: center !important;
+  padding: 14px 10px !important;
+}
+
+.receptor-number {
+  grid-area: num !important;
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  color: #b45309 !important;
+  text-align: center !important;
+}
+
+.receptor-message {
+  grid-area: mensaje !important;
+  text-align: center !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+}
+
+.receptor-info {
+  grid-area: info !important;
+  text-align: center !important;
+  font-size: 13px !important;
+  white-space: nowrap !important;
+}
+
+.receptor-actions {
+  grid-area: acciones !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+.receptor-btn {
+  width: 54px !important;
+  height: 54px !important;
+  font-size: 0 !important;
+  padding: 0 !important;
+}
+
+.receptor-btn.done::before {
+  content: "✓" !important;
+  font-size: 28px !important;
+}
+
+.receptor-btn.obs::before {
+  content: "👁" !important;
+  font-size: 22px !important;
+}
+.mobile-task-row {
+  display: grid !important;
+  grid-template-columns: 44px 1fr 64px !important;
+  gap: 10px !important;
+  align-items: center !important;
+  padding: 16px 12px !important;
+  border-bottom: 1px solid #ddd !important;
+  background: white !important;
+}
+
+.mobile-task-row.pending {
+  background: #fffbea !important;
+}
+
+.mobile-task-number {
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  color: #b45309 !important;
+  text-align: center !important;
+}
+
+.mobile-task-main {
+  min-width: 0 !important;
+  text-align: center !important;
+}
+
+.mobile-task-message {
+  font-size: 17px !important;
+  line-height: 1.35 !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+  color: #3b3651 !important;
+}
+
+.mobile-task-row.pending .mobile-task-message {
+  font-weight: 800 !important;
+}
+
+.mobile-task-row:not(.pending) .mobile-task-message {
+  font-weight: 500 !important;
+}
+
+.mobile-task-info {
+  margin-top: 8px !important;
+  font-size: 12px !important;
+  color: #374151 !important;
+  white-space: normal !important;
+}
+
+.mobile-task-info strong {
+  color: #065f46 !important;
+}
+
+.mobile-task-actions {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  align-items: center !important;
+}
+
+.mobile-icon-btn {
+  width: 52px !important;
+  height: 52px !important;
+  border-radius: 10px !important;
+  background: white !important;
+  font-size: 24px !important;
+  font-weight: 800 !important;
+}
+
+.mobile-icon-btn.done {
+  border: 2px solid #16a34a !important;
+  color: #065f46 !important;
+}
+
+.mobile-icon-btn.obs {
+  border: 2px solid #ea580c !important;
+  color: #7c2d12 !important;
+}
