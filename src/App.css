@@ -401,7 +401,10 @@ textarea {
 .receptor-sheet .mobile-task-main {
   grid-area: main !important;
   min-width: 0 !important;
-  text-align: center !important;
+  text-align: left !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
 }
 
 .receptor-sheet .mobile-task-message {
@@ -411,6 +414,7 @@ textarea {
   color: #4b445f !important;
   word-break: break-word !important;
   overflow-wrap: anywhere !important;
+  text-align: left !important;
 }
 
 .receptor-sheet .mobile-task-row:not(.pending) .mobile-task-message {
@@ -418,11 +422,12 @@ textarea {
 }
 
 .receptor-sheet .mobile-task-info {
-  margin-top: 8px !important;
-  font-size: 12px !important;
-  line-height: 1.25 !important;
+  margin-top: 6px !important;
+  font-size: 11px !important;
+  line-height: 1.2 !important;
   color: #4b445f !important;
-  white-space: normal !important;
+  white-space: nowrap !important;
+  text-align: left !important;
 }
 
 .receptor-sheet .mobile-task-info strong {
@@ -471,4 +476,18 @@ textarea {
 .receptor-sheet .mobile-icon-btn.obs::before {
   content: "👁" !important;
   font-size: 22px !important;
+}
+.receptor-sheet .mobile-task-main {
+  text-align: left !important;
+  align-items: flex-start !important;
+}
+
+.receptor-sheet .mobile-task-message {
+  text-align: left !important;
+}
+
+.receptor-sheet .mobile-task-info {
+  text-align: left !important;
+  margin-top: 8px !important;
+  display: block !important;
 }
