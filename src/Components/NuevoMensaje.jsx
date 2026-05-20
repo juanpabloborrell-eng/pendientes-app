@@ -5,12 +5,18 @@ export default function NuevoMensaje({ user, destinatarios, onEnviado }) {
   const [texto, setTexto] = useState('')
   const [busqueda, setBusqueda] = useState('')
   const [seleccionados, setSeleccionados] = useState([])
+  const [toast, setToast] = useState('')
 
   const destinatariosFiltrados = useMemo(() => {
     return destinatarios.filter((d) =>
       d.nombre.toLowerCase().includes(busqueda.toLowerCase())
     )
   }, [destinatarios, busqueda])
+
+  function mostrarToast(msg) {
+    setToast(msg)
+    setTimeout(() => setToast(''), 1400)
+  }
 
   function toggle(id) {
     setSeleccionados((prev) =>
@@ -27,8 +33,15 @@ export default function NuevoMensaje({ user, destinatarios, onEnviado }) {
   }
 
   async function enviar() {
-    if (!texto.trim()) return alert('Escribí un mensaje')
-    if (seleccionados.length === 0) return alert('Seleccioná al menos un destinatario')
+    if (!texto.trim()) {
+      mostrarToast('Escribí un mensaje')
+      return
+    }
+
+    if (seleccionados.length === 0) {
+      mostrarToast('Seleccioná destinatarios')
+      return
+    }
 
     const { data: mensaje, error } = await supabase
       .from('pendientes_mensajes')
@@ -40,7 +53,7 @@ export default function NuevoMensaje({ user, destinatarios, onEnviado }) {
       .single()
 
     if (error) {
-      alert('Error al crear mensaje')
+      mostrarToast('Error al crear mensaje')
       return
     }
 
@@ -54,17 +67,24 @@ export default function NuevoMensaje({ user, destinatarios, onEnviado }) {
       .insert(filas)
 
     if (errorDestinatarios) {
-      alert('Error al asignar destinatarios')
+      mostrarToast('Error al asignar destinatarios')
       return
     }
 
+    mostrarToast('✓ Mensaje enviado')
+
     setTexto('')
     setSeleccionados([])
-    onEnviado()
+
+    setTimeout(() => {
+      onEnviado()
+    }, 2000)
   }
 
   return (
     <div className="new-message">
+      {toast && <div className="toast">{toast}</div>}
+
       <textarea
         placeholder="Escribir mensaje..."
         value={texto}

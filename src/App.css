@@ -181,13 +181,13 @@ textarea {
 }
 
 .recipient-grid button {
-  border: 1px solid #ddd;
+  position: relative;
+  border-radius: 28px;
+  padding: 24px 16px;
+  min-height: 155px;
   background: white;
-  border-radius: 18px;
-  padding: 14px 10px;
-  cursor: pointer;
-  font-size: 15px;
-  text-align: center;
+  border: 2px solid #e5e7eb;
+  box-shadow: 0 4px 14px rgba(0,0,0,.06);
 }
 
 .recipient-grid button.selected {
@@ -535,4 +535,600 @@ textarea {
   padding: 12px 14px;
   font-weight: bold;
   text-align: center;
+}
+.toast {
+  background: #0b6b5a;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 8px 20px rgba(0,0,0,.18);
+}
+.recipient-grid button {
+  position: relative;
+}
+
+.unread-dot {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: #ef4444;
+  color: white;
+  font-size: 13px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  box-shadow: 0 2px 6px rgba(0,0,0,.25);
+}
+.recipient-grid {
+  grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
+  gap: 8px;
+}
+
+.recipient-grid button {
+  min-height: 92px;
+  padding: 12px 8px;
+  border-radius: 18px;
+}
+
+.recipient-grid button strong {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.recipient-counts {
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.mini-card {
+  min-height: 38px;
+  padding: 8px 4px;
+  border-radius: 12px;
+}
+
+.mini-number {
+  font-size: 17px;
+}
+.new-message .recipient-grid {
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 7px;
+}
+
+.new-message .recipient-grid button {
+  min-height: 44px;
+  padding: 8px 6px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: bold;
+}
+.toast {
+  background: #0b6b5a;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 8px 20px rgba(0,0,0,.18);
+}
+.toast {
+  position: fixed;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background: #16a34a;
+  color: white;
+  padding: 14px 22px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 16px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.28);
+  text-align: center;
+}
+.messages-sheet {
+  margin: 14px;
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 3px 14px rgba(0,0,0,.08);
+  overflow: hidden;
+}
+
+.sheet-title {
+  font-size: 24px;
+  font-weight: 800;
+  padding: 22px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.sheet-row {
+  display: grid;
+  grid-template-columns: 50px 1fr 180px 170px;
+  gap: 18px;
+  align-items: center;
+  padding: 22px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.sheet-row:last-child {
+  border-bottom: none;
+}
+
+.sheet-number {
+  font-size: 22px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.sheet-message {
+  font-size: 20px;
+  line-height: 1.4;
+  font-weight: 400;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+
+.sheet-row.is-pending .sheet-message {
+  font-weight: 800;
+}
+
+.sheet-info {
+  font-size: 15px;
+  color: #374151;
+  line-height: 1.6;
+}
+
+.sheet-info strong {
+  color: #075e54;
+}
+
+.sheet-actions {
+  display: grid;
+  gap: 8px;
+}
+
+.sheet-btn {
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 800;
+  cursor: pointer;
+  background: white;
+}
+
+.sheet-btn.completed {
+  border: 1px solid #16a34a;
+  color: #166534;
+}
+
+.sheet-btn.completed.active {
+  background: #dcfce7;
+}
+
+.sheet-btn.observed {
+  border: 1px solid #f97316;
+  color: #ea580c;
+}
+
+.sheet-btn.observed.active {
+  background: #ffedd5;
+}
+
+@media (max-width: 720px) {
+  .sheet-row {
+  display: grid !important;
+  grid-template-columns: 45px minmax(0, 1fr) 170px 160px;
+  gap: 18px;
+  align-items: center;
+  padding: 22px 24px;
+  border-bottom: 1px solid #ddd;
+  background: white;
+}
+
+  .sheet-message {
+    font-size: 17px;
+  }
+
+  .sheet-info {
+    grid-column: 2;
+    font-size: 14px;
+  }
+
+  .sheet-actions {
+    grid-column: 2;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+/* NUEVA VISTA RECEPTOR - HOJA DE MENSAJES */
+
+.messages-sheet {
+  margin: 16px;
+  background: white !important;
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.10);
+  overflow: hidden;
+}
+
+.sheet-title {
+  font-size: 24px;
+  font-weight: 800;
+  padding: 22px 24px;
+  border-bottom: 1px solid #ddd;
+}
+
+.sheet-row {
+  display: grid !important;
+  grid-template-columns: 45px 1fr 170px 160px;
+  gap: 18px;
+  align-items: center;
+  padding: 22px 24px;
+  border-bottom: 1px solid #ddd;
+  background: white;
+}
+
+.sheet-number {
+  font-size: 22px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.sheet-message {
+  font-size: 20px;
+  line-height: 1.35;
+  font-weight: 400;
+}
+
+.sheet-row.is-pending .sheet-message {
+  font-weight: 800;
+}
+
+.sheet-info {
+  font-size: 15px;
+  color: #374151;
+  line-height: 1.6;
+}
+
+.sheet-info strong {
+  color: #075e54;
+}
+
+.sheet-actions {
+  display: grid;
+  gap: 8px;
+}
+
+.sheet-btn {
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 800;
+  cursor: pointer;
+  background: white;
+}
+
+.sheet-btn.completed {
+  border: 1px solid #16a34a;
+  color: #166534;
+}
+
+.sheet-btn.completed.active {
+  background: #dcfce7;
+}
+
+.sheet-btn.observed {
+  border: 1px solid #f97316;
+  color: #ea580c;
+}
+
+.sheet-btn.observed.active {
+  background: #ffedd5;
+}
+/* Mejoras hoja receptor */
+
+.sheet-head {
+  display: grid;
+  grid-template-columns: 45px minmax(0, 1fr) 170px 160px;
+  gap: 18px;
+  padding: 12px 24px;
+  border-bottom: 1px solid #ddd;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.sheet-row.is-pending {
+  background: #fffbea;
+}
+
+.sheet-row.is-pending .sheet-number {
+  color: #b45309;
+}
+
+.sheet-row:not(.is-pending) {
+  background: white;
+}
+
+.sheet-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.sheet-btn {
+  min-height: 38px;
+  font-size: 14px;
+}
+
+/* Responsive receptor */
+@media (max-width: 720px) {
+  .messages-sheet {
+    margin: 10px;
+    border-radius: 14px;
+  }
+
+  .sheet-head {
+    display: none;
+  }
+
+  .sheet-row {
+    grid-template-columns: 34px minmax(0, 1fr) !important;
+    gap: 10px;
+    padding: 14px;
+    align-items: start;
+  }
+
+  .sheet-number {
+    font-size: 18px;
+    padding-top: 2px;
+  }
+
+  .sheet-message {
+    font-size: 16px;
+    grid-column: 2;
+  }
+
+  .sheet-info {
+    grid-column: 2;
+    font-size: 13px;
+    margin-top: 6px;
+  }
+
+  .sheet-actions {
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .sheet-btn {
+    min-height: 36px;
+    padding: 8px;
+    font-size: 13px;
+  }
+}
+.sheet-head {
+  display: grid !important;
+  grid-template-columns: 45px minmax(0, 1fr) 170px 160px !important;
+  gap: 18px !important;
+  padding: 12px 24px !important;
+  border-bottom: 1px solid #ddd !important;
+  background: #f8fafc !important;
+  color: #475569 !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+}
+
+.sheet-row {
+  grid-template-columns: 45px minmax(0, 1fr) 170px 160px !important;
+}
+
+.sheet-row.is-pending {
+  background: #fffbea !important;
+}
+
+.sheet-message {
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+}
+
+@media (max-width: 720px) {
+  .sheet-head {
+    display: none !important;
+  }
+
+  .sheet-row {
+    grid-template-columns: 34px minmax(0, 1fr) !important;
+    padding: 14px !important;
+  }
+
+  .sheet-info {
+    grid-column: 2 !important;
+  }
+
+  .sheet-actions {
+    grid-column: 2 !important;
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+.receptor-sheet {
+  margin: 16px;
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.10);
+  overflow: hidden;
+}
+
+.receptor-title {
+  font-size: 24px;
+  font-weight: 800;
+  padding: 22px 24px;
+  border-bottom: 1px solid #ddd;
+}
+
+.receptor-head {
+  display: grid;
+  grid-template-columns: 45px minmax(0, 1fr) 170px 160px;
+  gap: 18px;
+  padding: 12px 24px;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  border-bottom: 1px solid #ddd;
+}
+
+.receptor-row {
+  display: grid;
+  grid-template-columns: 45px minmax(0, 1fr) 170px 160px;
+  gap: 18px;
+  align-items: center;
+  padding: 22px 24px;
+  border-bottom: 1px solid #ddd;
+}
+
+.receptor-row.pending {
+  background: #fffbea;
+}
+
+.receptor-number {
+  font-size: 22px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.receptor-message {
+  font-size: 20px;
+  line-height: 1.4;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.receptor-row.pending .receptor-message {
+  font-weight: 800;
+}
+
+.receptor-info {
+  font-size: 15px;
+  color: #374151;
+  line-height: 1.6;
+}
+
+.receptor-info strong {
+  color: #075e54;
+}
+
+.receptor-actions {
+  display: grid;
+  gap: 8px;
+}
+
+.receptor-btn {
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 800;
+  cursor: pointer;
+  background: white;
+}
+
+.receptor-btn.done {
+  border: 1px solid #16a34a;
+  color: #166534;
+}
+
+.receptor-btn.done.active {
+  background: #dcfce7;
+}
+
+.receptor-btn.obs {
+  border: 1px solid #f97316;
+  color: #ea580c;
+}
+
+.receptor-btn.obs.active {
+  background: #ffedd5;
+}
+
+@media (max-width: 720px) {
+  .receptor-head {
+    display: none;
+  }
+
+  .receptor-row {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 10px;
+    padding: 14px;
+    align-items: start;
+  }
+
+  .receptor-number {
+    font-size: 18px;
+  }
+
+  .receptor-message {
+    font-size: 16px;
+  }
+
+  .receptor-info {
+    grid-column: 2;
+    font-size: 13px;
+  }
+
+  .receptor-actions {
+    grid-column: 2;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 8px;
+  }
+}
+.receptor-sheet {
+  width: calc(100% - 24px);
+  max-width: none;
+  margin: 12px;
+}
+
+.receptor-title {
+  text-align: left;
+  padding: 18px 22px;
+}
+
+.receptor-head {
+  display: grid !important;
+}
+
+.receptor-message {
+  text-align: left;
+}
+
+.receptor-info {
+  text-align: left;
+}
+
+.receptor-actions {
+  min-width: 150px;
+}
+
+@media (min-width: 721px) {
+  .app-shell {
+    max-width: 1050px;
+  }
+
+  .receptor-row,
+  .receptor-head {
+    grid-template-columns: 42px minmax(0, 1fr) 190px 160px;
+  }
 }

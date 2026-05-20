@@ -5,6 +5,7 @@ import ListaMensajes from './ListaMensajes'
 export default function MisPendientes({ user }) {
   const [mensajes, setMensajes] = useState([])
   const [filtro, setFiltro] = useState('todos')
+  const [nuevos, setNuevos] = useState(0)
 
   async function cargarMisPendientes() {
     const { data } = await supabase
@@ -33,6 +34,7 @@ export default function MisPendientes({ user }) {
     setMensajes(visibles)
 
     const noLeidos = visibles.filter((x) => !x.leido).map((x) => x.id)
+    setNuevos(noLeidos.length)
 
     if (noLeidos.length > 0) {
       await supabase
@@ -60,8 +62,39 @@ export default function MisPendientes({ user }) {
   }
 
   useEffect(() => {
-    cargarMisPendientes()
-  }, [])
+  cargarMisPendientes()
+
+  const channel = supabase
+    .channel(`pendientes-destinatario-${user.id}`)
+    .on(
+      'postgres_changes',
+      {
+        event: '*',
+        schema: 'public',
+        table: 'pendientes_destinatarios',
+        filter: `destinatario_id=eq.${user.id}`,
+      },
+      () => {
+        setTimeout(() => cargarMisPendientes(), 300)
+      }
+    )
+    .on(
+      'postgres_changes',
+      {
+        event: '*',
+        schema: 'public',
+        table: 'pendientes_mensajes',
+      },
+      () => {
+        setTimeout(() => cargarMisPendientes(), 300)
+      }
+    )
+    .subscribe()
+
+  return () => {
+    supabase.removeChannel(channel)
+  }
+}, [])
 
   const mensajesFiltrados =
     filtro === 'todos'
@@ -70,6 +103,11 @@ export default function MisPendientes({ user }) {
 
   return (
     <div>
+      {nuevos > 0 && (
+  <div className="new-alert">
+    🔔 Tenés {nuevos} pendiente{nuevos > 1 ? 's' : ''} nuevo{nuevos > 1 ? 's' : ''}
+  </div>
+)}
       <div className="filters">
         <button className={filtro === 'todos' ? 'active' : ''} onClick={() => setFiltro('todos')}>
           Todos

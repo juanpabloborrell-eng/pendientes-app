@@ -9,11 +9,56 @@ export default function ListaMensajes({
     return <div className="empty">No hay pendientes.</div>
   }
 
+  // VISTA RECEPTOR
+  if (!modoEmisor) {
+    return (
+      <div className="messages-sheet">
+        <div className="sheet-title">Mis mensajes</div>
+
+        {mensajes.map((item, index) => (
+          <div
+            key={item.id}
+            className={`sheet-row ${item.estado === 'pendiente' ? 'is-pending' : ''}`}
+          >
+            <div className="sheet-number">{index + 1}</div>
+
+            <div className="sheet-message">
+              {item.mensaje.texto}
+            </div>
+
+            <div className="sheet-info">
+              <div>
+                <strong>Emisor:</strong> {item.mensaje.emisor?.nombre}
+              </div>
+              <div>{formatFecha(item.mensaje.created_at)}</div>
+            </div>
+
+            <div className="sheet-actions">
+              <button
+                className={item.estado === 'cumplido' ? 'sheet-btn completed active' : 'sheet-btn completed'}
+                onClick={() => onCambiarEstado(item.id, item.estado === 'cumplido' ? 'pendiente' : 'cumplido')}
+              >
+                ✓ Cumplido
+              </button>
+
+              <button
+                className={item.estado === 'observado' ? 'sheet-btn observed active' : 'sheet-btn observed'}
+                onClick={() => onCambiarEstado(item.id, item.estado === 'observado' ? 'pendiente' : 'observado')}
+              >
+                👁 Observado
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  // VISTA EMISOR
   return (
     <div className="messages-area">
       {mensajes.map((item) => {
         const puedeEliminar =
-          modoEmisor &&
           item.estado === 'cumplido' &&
           item.mensaje.emisor_id === user.id
 
@@ -23,7 +68,9 @@ export default function ListaMensajes({
               {formatFecha(item.mensaje.created_at)} · {item.mensaje.emisor?.nombre}
             </div>
 
-            <div className="message-text">{item.mensaje.texto}</div>
+            <div className="message-text">
+              {item.mensaje.texto}
+            </div>
 
             <div className="status-row">
               <span className="badge-read">
@@ -35,33 +82,11 @@ export default function ListaMensajes({
               </span>
             </div>
 
-            {!modoEmisor && (
-              <div className="estado-actions">
-                <button
-                  className={item.estado === 'pendiente' ? 'active' : ''}
-                  onClick={() => onCambiarEstado(item.id, 'pendiente')}
-                >
-                  Pendiente
-                </button>
-
-                <button
-                  className={item.estado === 'cumplido' ? 'active' : ''}
-                  onClick={() => onCambiarEstado(item.id, 'cumplido')}
-                >
-                  Cumplido
-                </button>
-
-                <button
-                  className={item.estado === 'observado' ? 'active' : ''}
-                  onClick={() => onCambiarEstado(item.id, 'observado')}
-                >
-                  Observado
-                </button>
-              </div>
-            )}
-
             {puedeEliminar && (
-              <button className="delete-button" onClick={() => onEliminarMensaje(item)}>
+              <button
+                className="delete-button"
+                onClick={() => onEliminarMensaje(item)}
+              >
                 Eliminar mensaje
               </button>
             )}
@@ -91,13 +116,8 @@ function formatFecha(value) {
     minute: '2-digit',
   })
 
-  if (d >= inicioHoy) {
-    return `Hoy ${hora}`
-  }
-
-  if (d >= inicioAyer) {
-    return `Ayer ${hora}`
-  }
+  if (d >= inicioHoy) return `Hoy ${hora}`
+  if (d >= inicioAyer) return `Ayer ${hora}`
 
   return d.toLocaleDateString('es-AR', {
     day: '2-digit',

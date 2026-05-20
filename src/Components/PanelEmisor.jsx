@@ -9,6 +9,7 @@ export default function PanelEmisor({ user }) {
   const [destinatarioActivo, setDestinatarioActivo] = useState(null)
   const [vista, setVista] = useState('destinatarios')
   const [busqueda, setBusqueda] = useState('')
+  const [filtroDetalle, setFiltroDetalle] = useState('todos')
   const [contadores, setContadores] = useState({})
 
   async function cargarDestinatarios() {
@@ -150,9 +151,9 @@ export default function PanelEmisor({ user }) {
       () => {
         cargarContadores()
 
-        if (destinatarioActivo) {
-          cargarPendientesDe(destinatarioActivo)
-        }
+        if (vista === 'detalle' && destinatarioActivo) {
+  cargarPendientesDe(destinatarioActivo)
+}
       }
     )
     .subscribe()
@@ -160,13 +161,17 @@ export default function PanelEmisor({ user }) {
   return () => {
     supabase.removeChannel(channel)
   }
-}, [destinatarioActivo])
+}, [destinatarioActivo, vista])
 
   const destinatariosFiltrados = useMemo(() => {
     return destinatarios.filter((d) =>
       d.nombre.toLowerCase().includes(busqueda.toLowerCase())
     )
   }, [destinatarios, busqueda])
+  const mensajesDetalle =
+  filtroDetalle === 'todos'
+    ? mensajes
+    : mensajes.filter((m) => m.estado === filtroDetalle)
 
   return (
     <div>
@@ -211,8 +216,8 @@ export default function PanelEmisor({ user }) {
                 <button key={d.id} onClick={() => cargarPendientesDe(d)}>
                   <strong>{d.nombre}</strong>
                   {c.noLeidos > 0 && (
-  <div className="unread-badge">
-    {c.noLeidos} sin leer
+  <div className="unread-dot">
+    {c.noLeidos}
   </div>
 )}
 
@@ -238,13 +243,15 @@ export default function PanelEmisor({ user }) {
 
       {vista === 'nuevo' && (
         <NuevoMensaje
-          user={user}
-          destinatarios={destinatarios}
-          onEnviado={() => {
-            cargarContadores()
-            setVista('destinatarios')
-          }}
-        />
+  user={user}
+  destinatarios={destinatarios}
+  onEnviado={() => {
+    setDestinatarioActivo(null)
+    setMensajes([])
+    cargarContadores()
+    setVista('destinatarios')
+  }}
+/>
       )}
 
       {vista === 'detalle' && destinatarioActivo && (
@@ -254,12 +261,42 @@ export default function PanelEmisor({ user }) {
             <strong>Pendientes - {destinatarioActivo.nombre}</strong>
           </div>
 
-          <ListaMensajes
-            mensajes={mensajes}
-            user={user}
-            modoEmisor
-            onEliminarMensaje={eliminarMensaje}
-          />
+          <div className="filters">
+  <button
+    className={filtroDetalle === 'todos' ? 'active' : ''}
+    onClick={() => setFiltroDetalle('todos')}
+  >
+    Todos
+  </button>
+
+  <button
+    className={filtroDetalle === 'pendiente' ? 'active' : ''}
+    onClick={() => setFiltroDetalle('pendiente')}
+  >
+    Pendientes
+  </button>
+
+  <button
+    className={filtroDetalle === 'cumplido' ? 'active' : ''}
+    onClick={() => setFiltroDetalle('cumplido')}
+  >
+    Cumplidos
+  </button>
+
+  <button
+    className={filtroDetalle === 'observado' ? 'active' : ''}
+    onClick={() => setFiltroDetalle('observado')}
+  >
+    Observados
+  </button>
+</div>
+
+<ListaMensajes
+  mensajes={mensajesDetalle}
+  user={user}
+  modoEmisor
+  onEliminarMensaje={eliminarMensaje}
+/>
         </div>
       )}
     </div>
