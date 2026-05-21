@@ -881,3 +881,65 @@ textarea {
   min-height: 50px !important;
   border-radius: 10px !important;
 }
+.mobile-task-row {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: 54px minmax(0, 1fr) 64px !important;
+  min-height: 130px !important;
+  padding: 12px 76px 12px 58px !important;
+  background: #fffbea !important;
+  border-bottom: 1px solid #ddd !important;
+}
+
+.mobile-task-number {
+  position: absolute !important;
+  left: 18px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  color: #b45309 !important;
+}
+
+.mobile-task-main {
+  min-width: 0 !important;
+  height: 100% !important;
+  min-height: 106px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.mobile-task-footer {
+  order: 1 !important;
+  text-align: left !important;
+  font-size: 12px !important;
+  color: #4b445f !important;
+  white-space: nowrap !important;
+  margin: 0 0 10px 0 !important;
+  padding: 0 !important;
+}
+
+.mobile-task-message {
+  order: 2 !important;
+  flex: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  font-size: 19px !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+  color: #4b445f !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+}
+
+.mobile-task-actions {
+  position: absolute !important;
+  right: 12px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}

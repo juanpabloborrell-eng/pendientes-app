@@ -12,7 +12,7 @@ export default function ListaMensajes({
   if (!modoEmisor) {
     return (
       <div className="receptor-sheet">
-        <div className="receptor-title">Mis mensajes </div>
+        <div className="receptor-title">Mis mensajes</div>
 
         {mensajes.map((item, index) => (
           <div
@@ -22,23 +22,38 @@ export default function ListaMensajes({
             <div className="mobile-task-number">{index + 1}</div>
 
             <div className="mobile-task-main">
-              <div className="mobile-task-message">{item.mensaje.texto}</div>
-              <div className="mobile-task-info">
-                <strong>Emisor:</strong> {item.mensaje.emisor?.nombre} · {formatFecha(item.mensaje.created_at)}
-              </div>
-            </div>
+  <div className="mobile-task-footer">
+    <strong>Emisor:</strong> {item.mensaje.emisor?.nombre}
+    <span> · </span>
+    {formatFecha(item.mensaje.created_at)}
+  </div>
+
+  <div className="mobile-task-message">
+    {item.mensaje.texto}
+  </div>
+</div>
 
             <div className="mobile-task-actions">
               <button
                 className="mobile-icon-btn done"
-                onClick={() => onCambiarEstado(item.id, item.estado === 'cumplido' ? 'pendiente' : 'cumplido')}
+                onClick={() =>
+                  onCambiarEstado(
+                    item.id,
+                    item.estado === 'cumplido' ? 'pendiente' : 'cumplido'
+                  )
+                }
               >
                 ✓
               </button>
 
               <button
                 className="mobile-icon-btn obs"
-                onClick={() => onCambiarEstado(item.id, item.estado === 'observado' ? 'pendiente' : 'observado')}
+                onClick={() =>
+                  onCambiarEstado(
+                    item.id,
+                    item.estado === 'observado' ? 'pendiente' : 'observado'
+                  )
+                }
               >
                 👁
               </button>
@@ -65,8 +80,13 @@ export default function ListaMensajes({
             <div className="message-text">{item.mensaje.texto}</div>
 
             <div className="status-row">
-              <span className="badge-read">{item.leido ? 'Leído ✓' : 'No leído'}</span>
-              <span className={`badge-status ${item.estado}`}>{labelEstado(item.estado)}</span>
+              <span className="badge-read">
+                {item.leido ? 'Leído ✓' : 'No leído'}
+              </span>
+
+              <span className={`badge-status ${item.estado}`}>
+                {labelEstado(item.estado)}
+              </span>
             </div>
 
             {puedeEliminar && (
@@ -90,6 +110,7 @@ function labelEstado(estado) {
 function formatFecha(value) {
   const d = new Date(value)
   const hoy = new Date()
+
   const inicioHoy = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate())
   const inicioAyer = new Date(inicioHoy)
   inicioAyer.setDate(inicioHoy.getDate() - 1)
