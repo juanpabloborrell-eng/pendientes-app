@@ -764,3 +764,43 @@ textarea {
   border: 2px solid #ea580c !important;
   color: #7c2d12 !important;
 }
+.mobile-task-row {
+  position: relative !important;
+  min-height: 150px !important;
+  padding: 18px 76px 34px 58px !important;
+}
+
+.mobile-task-number {
+  position: absolute !important;
+  left: 18px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
+.mobile-task-main {
+  display: block !important;
+  min-height: auto !important;
+  padding: 0 !important;
+}
+
+.mobile-task-message {
+  text-align: left !important;
+  margin-top: 0 !important;
+}
+
+.mobile-task-footer {
+  position: absolute !important;
+  left: 58px !important;
+  right: 76px !important;
+  bottom: 16px !important;
+  text-align: center !important;
+  font-size: 12px !important;
+  white-space: nowrap !important;
+}
+
+.mobile-task-actions {
+  position: absolute !important;
+  right: 12px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
