@@ -6,6 +6,7 @@ import './App.css'
 
 export default function App() {
   const [user, setUser] = useState(null)
+  const [modo, setModo] = useState('emisor')
 
   useEffect(() => {
     const guardado = localStorage.getItem('pendientes_user')
@@ -36,7 +37,7 @@ export default function App() {
     <div className="app-page">
       <div className="app-shell">
         <header className="app-header">
-          <div>
+          <div className="header-center">
             <img src="/logo.png" alt="Logo" className="header-logo" />
             <h1>{esEmisor ? 'Pendientes' : 'Mis pendientes'}</h1>
             <p>{user.nombre}</p>
@@ -47,9 +48,16 @@ export default function App() {
           </button>
         </header>
 
-        {esEmisor && <PanelEmisor user={user} />}
+        {user.rol === 'ambos' && (
+  <div className="tabs">
+    <button onClick={() => setModo('emisor')}>Enviar pendientes</button>
+    <button onClick={() => setModo('receptor')}>Mis pendientes</button>
+  </div>
+)}
 
-        {!esEmisor && esDestinatario && <MisPendientes user={user} />}
+{(user.rol === 'emisor' || modo === 'emisor') && <PanelEmisor user={user} />}
+
+{(user.rol === 'destinatario' || modo === 'receptor') && <MisPendientes user={user} />}
       </div>
     </div>
   )
