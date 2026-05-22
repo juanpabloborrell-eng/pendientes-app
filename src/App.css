@@ -582,73 +582,90 @@ textarea {
   }
 
   .app-header {
-    padding: 14px 10px 12px;
+    padding: 12px 8px 10px;
   }
 
   .header-logo {
-    width: 180px;
-    padding: 8px 12px;
+    width: 210px;
+    padding: 10px 14px;
+    margin-bottom: 10px;
   }
 
   .app-header h1 {
-    font-size: 22px;
+    font-size: 20px;
+    margin: 0;
   }
 
   .app-header p {
     font-size: 13px;
+    margin-top: 4px;
   }
 
   .logout-button {
-    top: 8px;
-    right: 8px;
-    padding: 6px 8px;
+    top: 10px;
+    right: 10px;
+    padding: 7px 10px;
     font-size: 12px;
   }
 
-  .tabs {
-    padding: 6px;
+  .tabs,
+  .filters {
+    padding: 8px;
     gap: 6px;
+    overflow-x: auto;
   }
 
-  .tabs button {
-    flex: 1;
+  .tabs button,
+  .filters button {
+    flex: none;
     font-size: 13px;
-    padding: 10px 6px;
-  }
-
-  .recipient-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .new-message .recipient-grid {
-    grid-template-columns: repeat(2, 1fr);
+    padding: 10px 14px;
+    white-space: nowrap;
   }
 
   .mobile-task-row {
-    min-height: 120px;
-    padding: 10px 64px 10px 46px;
+    display: flex !important;
+    align-items: center !important;
+    min-height: 105px;
+    padding: 10px 8px;
+    gap: 8px;
   }
 
   .mobile-task-number {
-    left: 10px;
-    font-size: 22px;
+    width: 34px;
+    flex-shrink: 0;
+    position: static !important;
+    transform: none !important;
+    font-size: 18px;
   }
 
   .mobile-task-main {
-    min-height: 90px;
+    flex: 1;
+    min-width: 0;
+    min-height: auto;
   }
 
   .mobile-task-footer {
     font-size: 10px;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .mobile-task-message {
-    font-size: 18px;
-    line-height: 1.15;
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: 800;
   }
 
   .mobile-task-actions {
-    right: 8px;
+    width: 48px;
+    flex-shrink: 0;
+    position: static !important;
+    transform: none !important;
+    display: flex !important;
+    flex-direction: column;
     gap: 8px;
   }
 
@@ -659,23 +676,17 @@ textarea {
     font-size: 18px;
   }
 
+  .voice-button {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .recipient-grid,
+  .new-message .recipient-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .message-bubble {
     max-width: 100%;
   }
-}
-.voice-button {
-  width: 100%;
-  margin-bottom: 12px;
-  padding: 14px;
-  border: none;
-  border-radius: 14px;
-  background: #0b6b5a;
-  color: white;
-  font-size: 16px;
-  font-weight: 800;
-  cursor: pointer;
-}
-.voice-button {
-  padding: 12px;
-  font-size: 14px;
 }
