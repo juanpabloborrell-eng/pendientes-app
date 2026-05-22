@@ -6,6 +6,7 @@ export default function NuevoMensaje({ user, destinatarios, onEnviado }) {
   const [busqueda, setBusqueda] = useState('')
   const [seleccionados, setSeleccionados] = useState([])
   const [toast, setToast] = useState('')
+  const [escuchando, setEscuchando] = useState(false)
 
   const destinatariosFiltrados = useMemo(() => {
     return destinatarios.filter((d) =>
@@ -15,7 +16,7 @@ export default function NuevoMensaje({ user, destinatarios, onEnviado }) {
 
   function mostrarToast(msg) {
     setToast(msg)
-    setTimeout(() => setToast(''), 1400)
+    setTimeout(() => setToast(''), 1800)
   }
 
   function toggle(id) {
@@ -30,6 +31,84 @@ export default function NuevoMensaje({ user, destinatarios, onEnviado }) {
     } else {
       setSeleccionados(destinatarios.map((d) => d.id))
     }
+  }
+
+  function normalizar(texto) {
+    return texto
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[.,;:]/g, '')
+      .trim()
+  }
+
+  function procesarAudio(frase) {
+    const fraseNormal = normalizar(frase)
+
+    const encontrados = destinatarios.filter((d) => {
+      const nombreNormal = normalizar(d.nombre)
+      return fraseNormal.includes(nombreNormal)
+    })
+
+    if (encontrados.length > 0) {
+      setSeleccionados(encontrados.map((d) => d.id))
+
+      let mensajeLimpio = frase
+
+      encontrados.forEach((d) => {
+        const regex = new RegExp(d.nombre, 'gi')
+        mensajeLimpio = mensajeLimpio.replace(regex, '')
+      })
+
+      mensajeLimpio = mensajeLimpio
+        .replace(/^para\s+/i, '')
+        .replace(/^a\s+/i, '')
+        .replace(/^decile\s+a\s+/i, '')
+        .replace(/^mandar\s+a\s+/i, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+
+      setTexto(mensajeLimpio)
+      mostrarToast(`Detectado: ${encontrados.map((d) => d.nombre).join(', ')}`)
+    } else {
+      setTexto(frase)
+      mostrarToast('No detecté destinatario')
+    }
+  }
+
+  function dictar() {
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition
+
+    if (!SpeechRecognition) {
+      mostrarToast('El navegador no soporta audio')
+      return
+    }
+
+    const recognition = new SpeechRecognition()
+    recognition.lang = 'es-AR'
+    recognition.continuous = false
+    recognition.interimResults = false
+
+    setEscuchando(true)
+    mostrarToast('Escuchando...')
+
+    recognition.onresult = (event) => {
+      const frase = event.results[0][0].transcript
+      procesarAudio(frase)
+      setEscuchando(false)
+    }
+
+    recognition.onerror = () => {
+      mostrarToast('No pude escuchar el audio')
+      setEscuchando(false)
+    }
+
+    recognition.onend = () => {
+      setEscuchando(false)
+    }
+
+    recognition.start()
   }
 
   async function enviar() {
@@ -78,12 +157,16 @@ export default function NuevoMensaje({ user, destinatarios, onEnviado }) {
 
     setTimeout(() => {
       onEnviado()
-    }, 2000)
+    }, 700)
   }
 
   return (
     <div className="new-message">
       {toast && <div className="toast">{toast}</div>}
+
+      <button className="voice-button" onClick={dictar}>
+        {escuchando ? '🎙️ Escuchando...' : '🎙️ Dictar pendiente'}
+      </button>
 
       <textarea
         placeholder="Escribir mensaje..."
