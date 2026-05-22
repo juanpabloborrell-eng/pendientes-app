@@ -444,7 +444,7 @@ textarea {
 .mobile-task-row {
   position: relative;
   display: grid;
-  grid-template-columns: 54px minmax(0, 1fr) 64px;
+  grid-template-columns: 54px 1fr 64px;
   min-height: 130px;
   padding: 12px 76px 12px 58px;
   background: #fffbea;
@@ -466,6 +466,7 @@ textarea {
 }
 
 .mobile-task-main {
+  width: 100%;
   min-width: 0;
   height: 100%;
   min-height: 106px;
@@ -498,10 +499,11 @@ textarea {
   text-align: left;
   font-size: 25px;
   font-weight: 800;
-  line-height: 1.25;
+  line-height: 1.2;
   color: #4b445f;
-  word-break: break-word;
-  overflow-wrap: anywhere;
+  word-break: normal;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 .mobile-task-row:not(.pending) .mobile-task-message {
