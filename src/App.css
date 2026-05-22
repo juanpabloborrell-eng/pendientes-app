@@ -675,3 +675,7 @@ textarea {
   font-weight: 800;
   cursor: pointer;
 }
+.voice-button {
+  padding: 12px;
+  font-size: 14px;
+}
