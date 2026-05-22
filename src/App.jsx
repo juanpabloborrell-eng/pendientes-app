@@ -10,7 +10,6 @@ export default function App() {
 
   useEffect(() => {
     const guardado = localStorage.getItem('pendientes_user')
-
     if (guardado) {
       setUser(JSON.parse(guardado))
     }
@@ -19,19 +18,22 @@ export default function App() {
   function handleLogin(usuario) {
     setUser(usuario)
     localStorage.setItem('pendientes_user', JSON.stringify(usuario))
+    setModo(usuario.rol === 'ambos' ? 'emisor' : usuario.rol)
   }
 
   function logout() {
     localStorage.removeItem('pendientes_user')
     setUser(null)
+    setModo('emisor')
   }
 
   if (!user) {
     return <Login onLogin={handleLogin} />
   }
 
-  const esEmisor = user.rol === 'emisor' || user.rol === 'ambos'
-  const esDestinatario = user.rol === 'destinatario' || user.rol === 'ambos'
+  const esSoloEmisor = user.rol === 'emisor'
+  const esSoloDestinatario = user.rol === 'destinatario'
+  const esAmbos = user.rol === 'ambos'
 
   return (
     <div className="app-page">
@@ -39,7 +41,7 @@ export default function App() {
         <header className="app-header">
           <div className="header-center">
             <img src="/logo.png" alt="Logo" className="header-logo" />
-            <h1>{esEmisor ? 'Pendientes' : 'Mis pendientes'}</h1>
+            <h1>{esSoloDestinatario || modo === 'receptor' ? 'Mis pendientes' : 'Pendientes'}</h1>
             <p>{user.nombre}</p>
           </div>
 
@@ -48,16 +50,31 @@ export default function App() {
           </button>
         </header>
 
-        {user.rol === 'ambos' && (
-  <div className="tabs">
-    <button onClick={() => setModo('emisor')}>Enviar pendientes</button>
-    <button onClick={() => setModo('receptor')}>Mis pendientes</button>
-  </div>
-)}
+        {esAmbos && (
+          <div className="tabs">
+            <button
+              className={modo === 'emisor' ? 'active' : ''}
+              onClick={() => setModo('emisor')}
+            >
+              Enviar pendientes
+            </button>
 
-{(user.rol === 'emisor' || modo === 'emisor') && <PanelEmisor user={user} />}
+            <button
+              className={modo === 'receptor' ? 'active' : ''}
+              onClick={() => setModo('receptor')}
+            >
+              Mis pendientes
+            </button>
+          </div>
+        )}
 
-{(user.rol === 'destinatario' || modo === 'receptor') && <MisPendientes user={user} />}
+        {esSoloEmisor && <PanelEmisor user={user} />}
+
+        {esSoloDestinatario && <MisPendientes user={user} />}
+
+        {esAmbos && modo === 'emisor' && <PanelEmisor user={user} />}
+
+        {esAmbos && modo === 'receptor' && <MisPendientes user={user} />}
       </div>
     </div>
   )
