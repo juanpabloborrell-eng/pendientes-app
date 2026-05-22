@@ -576,54 +576,91 @@ textarea {
 /* RESPONSIVE */
 
 @media (max-width: 520px) {
+  .app-shell {
+    width: 100%;
+    max-width: 100%;
+  }
+
   .app-header {
-    padding: 22px 12px 18px;
+    padding: 14px 10px 12px;
   }
 
   .header-logo {
-    width: 260px;
-    padding: 12px 18px;
+    width: 180px;
+    padding: 8px 12px;
   }
 
   .app-header h1 {
-    font-size: 26px;
+    font-size: 22px;
   }
 
   .app-header p {
-    font-size: 15px;
+    font-size: 13px;
   }
 
   .logout-button {
-    top: 12px;
-    right: 12px;
-    padding: 8px 10px;
+    top: 8px;
+    right: 8px;
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .tabs {
+    padding: 6px;
+    gap: 6px;
+  }
+
+  .tabs button {
+    flex: 1;
+    font-size: 13px;
+    padding: 10px 6px;
   }
 
   .recipient-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .message-bubble {
-    max-width: 100%;
+  .new-message .recipient-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .mobile-task-row {
-    min-height: 128px;
-    padding: 12px 70px 12px 54px;
+    min-height: 120px;
+    padding: 10px 64px 10px 46px;
   }
 
-  .mobile-task-message {
-    font-size: 21px;
+  .mobile-task-number {
+    left: 10px;
+    font-size: 22px;
+  }
+
+  .mobile-task-main {
+    min-height: 90px;
   }
 
   .mobile-task-footer {
-    font-size: 11px;
+    font-size: 10px;
+  }
+
+  .mobile-task-message {
+    font-size: 18px;
+    line-height: 1.15;
+  }
+
+  .mobile-task-actions {
+    right: 8px;
+    gap: 8px;
   }
 
   .mobile-icon-btn {
-    width: 48px;
-    height: 48px;
-    min-height: 48px;
+    width: 42px;
+    height: 42px;
+    min-height: 42px;
+    font-size: 18px;
+  }
+
+  .message-bubble {
+    max-width: 100%;
   }
 }
 .voice-button {
