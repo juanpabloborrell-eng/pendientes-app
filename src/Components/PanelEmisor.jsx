@@ -40,8 +40,22 @@ export default function PanelEmisor({ user }) {
     .select('*')
     .in('rol', ['destinatario', 'ambos'])
     .eq('activo', true)
+    const visibles =
+  user?.rol === 'admin'
+    ? (data || [])
+    : (data || []).filter((d) => d.rol !== 'ambos')
+    const admins = [
+  'eradics@porquissimo.com',
+  'juanpabloborrell@porquissimo.com',
+]
 
-  const ordenados = (data || []).sort((a, b) => {
+const esAdmin = admins.includes(user?.email)
+
+const visibles = esAdmin
+  ? (data || [])
+  : (data || []).filter((d) => d.rol !== 'ambos')
+
+  const ordenados = visibles.sort((a, b) => {
     const ia = orden.indexOf(a.nombre)
     const ib = orden.indexOf(b.nombre)
 
