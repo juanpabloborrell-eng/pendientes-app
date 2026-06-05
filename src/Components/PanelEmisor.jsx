@@ -40,11 +40,7 @@ export default function PanelEmisor({ user }) {
     .select('*')
     .in('rol', ['destinatario', 'ambos'])
     .eq('activo', true)
-    const visibles =
-  user?.rol === 'admin'
-    ? (data || [])
-    : (data || []).filter((d) => d.rol !== 'ambos')
-    const admins = [
+   const admins = [
   'eradics@porquissimo.com',
   'juanpabloborrell@porquissimo.com',
 ]
