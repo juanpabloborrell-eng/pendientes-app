@@ -40,18 +40,26 @@ export default function PanelEmisor({ user }) {
     .select('*')
     .in('rol', ['destinatario', 'ambos'])
     .eq('activo', true)
-   const admins = [
+const adminsTotales = [
   'eradics@porquissimo.com',
   'juanpabloborrell@porquissimo.com',
 ]
 
+const ambosLimitados = [
+  'estefania.antunes20@gmail.com',
+  'elopez@porquissimo.com',
+]
+
 const emailUsuario = user?.email || user?.correo || user?.mail || user?.usuario
 
-const esAdmin = admins.includes(emailUsuario)
+const esAdminTotal = adminsTotales.includes(emailUsuario)
+const esAmbosLimitado = ambosLimitados.includes(emailUsuario)
 
-const visibles = esAdmin
+const visibles = esAdminTotal
   ? (data || [])
-  : (data || []).filter((d) => d.rol !== 'ambos')
+  : esAmbosLimitado
+    ? (data || []).filter((d) => !adminsTotales.includes(d.usuario))
+    : (data || []).filter((d) => d.rol !== 'ambos')
 
   const ordenados = visibles.sort((a, b) => {
     const ia = orden.indexOf(a.nombre)
