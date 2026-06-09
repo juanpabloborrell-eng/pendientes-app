@@ -31,7 +31,6 @@ export default function App() {
     return <Login onLogin={handleLogin} />
   }
 
-  const esSoloEmisor = user.rol === 'emisor'
 const emailUsuario = user?.email || user?.correo || user?.mail || user?.usuario
 
 const usuariosAmbos = [
