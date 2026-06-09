@@ -35,6 +35,8 @@ export default function App() {
   const esSoloDestinatario = user.rol === 'destinatario'
   const esAmbos = user.rol === 'ambos'
 
+  console.log('ROL USUARIO:', user.rol)
+console.log('USUARIO:', user)
   return (
     <div className="app-page">
       <div className="app-shell">

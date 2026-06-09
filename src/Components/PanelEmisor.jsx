@@ -45,7 +45,9 @@ export default function PanelEmisor({ user }) {
   'juanpabloborrell@porquissimo.com',
 ]
 
-const esAdmin = admins.includes(user?.email)
+const emailUsuario = user?.email || user?.correo || user?.mail || user?.usuario
+
+const esAdmin = admins.includes(emailUsuario)
 
 const visibles = esAdmin
   ? (data || [])
