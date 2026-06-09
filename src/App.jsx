@@ -32,8 +32,19 @@ export default function App() {
   }
 
   const esSoloEmisor = user.rol === 'emisor'
-  const esSoloDestinatario = user.rol === 'destinatario'
-  const esAmbos = user.rol === 'ambos'
+const emailUsuario = user?.email || user?.correo || user?.mail || user?.usuario
+
+const usuariosAmbos = [
+  'eradics@porquissimo.com',
+  'juanpabloborrell@porquissimo.com',
+  'estefania.antunes20@gmail.com',
+  'elopez@porquissimo.com',
+]
+
+const esAmbos = user.rol === 'ambos' || usuariosAmbos.includes(emailUsuario)
+
+const esSoloEmisor = user.rol === 'emisor' && !esAmbos
+const esSoloDestinatario = user.rol === 'destinatario'
 
   console.log('ROL USUARIO:', user.rol)
 console.log('USUARIO:', user)
