@@ -25,6 +25,7 @@ export default function PanelEmisor({ user }) {
     'Pacheco',
     'Escobar',
     'Escobar II',
+    'Escobar III',
     'Benavidez',
     'Pilar',
     'Camion blanco',
